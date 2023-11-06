@@ -23,5 +23,5 @@ console.log(el)
     let obj2 = {foo2: "bar2"}
     _set.add(obj1)
     _weakset.add(obj2)
-})
+})()
 
