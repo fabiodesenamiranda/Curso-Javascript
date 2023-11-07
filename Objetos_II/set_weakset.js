@@ -18,7 +18,7 @@ for(let el of _set)
 console.log(el)
 
 
-(function () {
+;(function () {
     let obj1 = {foo: "bar"}
     let obj2 = {foo2: "bar2"}
     _set.add(obj1)
