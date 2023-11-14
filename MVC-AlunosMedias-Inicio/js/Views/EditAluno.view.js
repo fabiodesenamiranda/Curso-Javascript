@@ -1,49 +1,67 @@
 class EditAlunoView{
-    constructor(container, materiais){
+    constructor(form, materias){
+        this.form  = form
+        this.container = form.querySelector("[data-edit-notas]")
+        this.materias = materias
         
     }
 
     render(aluno){
-        const html = `
-        <div class="row">
+        const html = this.materias.map(materia =>         `
+    <div class="row">
 
         <div class="input-field col s4">
           <input
-            id="materia"
-            type="text"
+            id="materia_${materia}"
+            type="number"
             class="validate"
+            disabled
+            value ="${materia}"
           />
         </div>
+
+
         <div class="input-field col s2">
           <input
             id="nota_materia_1"
-            type="text"
+            type="number"
             class="validate"
           />
         </div>
+
+
+
         <div class="input-field col s2">
           <input
             id="nota_materia_2"
-            type="text"
+            type="number"
             class="validate"
           />
         </div>
+
+
         <div class="input-field col s2">
           <input
             id="nota_materia_3"
-            type="text"
+            type="number"
             class="validate"
           />
         </div>
+        
         <div class="input-field col s2">
           <input
             id="nota_materia_4"
-            type="text"
+            type="number"
             class="validate"
           />
         </div>
-        `
+    </div>
+        `).join("")
+        
+        
+        
 
+        this.container.innerHTML = html
 
 
     }
