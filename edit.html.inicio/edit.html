@@ -104,7 +104,8 @@
     <script src="js/Models/Aluno.model.js"></script>
     <script src="js/Services/Alunos.service.js"></script>
     <script src="js/Services/Materias.service.js"></script>
-    <script src="js/Controllers/"></script>
+    <script src="js/Views/EditAluno.view.js"></script>
+    <script src="js/Controllers/EditAluno.controller.js"></script>
  
  
     <!-- <script src="js/app.js"></script> -->
@@ -126,7 +127,14 @@
           new MateriasService().materias
           )
 
-const editAlunoController = new EditAlunoController(aluno, editAlunoView)
+        const editAlunoController = new EditAlunoController(aluno, editAlunoView, alunosService)
+
+        document.querySelector("form").addEventListener("submit", function(e){
+          e.preventDefault()
+          const nome = document.querySelector("first_name").value
+
+          editAlunoController.edit(aluno, nome)
+        })
 
  
         // >CÓDIGO JAVASCRIPT CONTINUA AQUI...

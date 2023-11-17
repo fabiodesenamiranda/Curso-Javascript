@@ -1,17 +1,15 @@
-class AlunosView{
-    constructor(table, materias){
-        this.tableList = table 
+class AlunosView {
+    constructor(table, materias) {
+        this.tableList = table
         this.tableHeader = this.tableList.querySelector("thead")
         this.tableBody = this.tableList.querySelector("tbody")
         this.materias = materias
-
         this.renderHeader()
-
     }
 
-    renderHeader(){
+    renderHeader() {
         const htmlHeader = document.createElement("tr")
-        htmlHeader.innerHTML = "<td>Nome</td>" 
+        htmlHeader.innerHTML = "<td>Nome</td>"
 
         let htmlheaderMaterias = this.materias.map(materia => {
             return "<td>" + materia + "</td>"
@@ -22,38 +20,39 @@ class AlunosView{
         this.tableHeader.appendChild(htmlHeader)
     }
 
-    render(alunos){       
-        this.tableBody.innerHTML = "" 
+    render(alunos) {
+        this.tableBody.innerHTML = ""
         alunos.forEach(aluno => {
             const htmlBody = document.createElement("tr")
-            let htmlMedias = `<td>${aluno.nome}</td>`
-            let encontrado = false 
+            let htmlMedias = `<td><a href="edit.html?id=${aluno._id}">${aluno.nome}</a></td>`
+            let encontrado = false
 
             this.materias.forEach(materia => {
-                if (materia in aluno.notas){
+                if (materia in aluno.notas) {
                     encontrado = true
                 }
             })
 
-            if(encontrado){
+            if (encontrado) {
                 this.materias.forEach(materia => {
                     htmlMedias += `<td>
-                        ${aluno.media[materia] !== undefined ? 
+                        ${aluno.media[materia] !== undefined ?
                             aluno.media[materia] :
-                            `<a href = "edit.html?id=${aluno._id}">Incluir Nota</a>`
-                        } 
+                            `<a href="edit.html?id=${aluno._id}"> Incluir nota</a>`
+                        }
                     </td>`
                 })
-
             } else {
-                htmlMedias += `<td colspan="${this.materias.length}">
-                    <a href="edit.html?id=${aluno._id}">Incluir Notas</a>
+                htmlMedias += `<td colspan="${this.materias.length}"> 
+                    <a href="edit.html?id=${aluno._id}">Incluir notas</a>
                 </td>`
             }
+
 
 
             htmlBody.innerHTML = htmlMedias
             this.tableBody.appendChild(htmlBody)
         })
     }
+
 }
