@@ -56,5 +56,4 @@ if (sessionStorage.getItem("search")) {
   // document.querySelector("#search_name").dispatchEvent(inputEvent)
   document.querySelector("#search_name").dispatchEvent(inputEvent_IE)
 
-
 }
