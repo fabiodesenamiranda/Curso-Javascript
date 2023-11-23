@@ -143,10 +143,7 @@ input[type="submit"]:hover {
     font-size:1.1rem;
 }
 
-.fa-edit{
-    /* grid-column: 3/4;    */
-    /* margin-right: 16px; */
-}
+
 
 /*Container que abre ao clicar no icon do lapis para editar tarefa*/
 
