@@ -10,9 +10,23 @@
     <script>
         const regex = /^\d{5}-\d{3}$/g
 
+        const elfocus = (e) => console.log("focus")
+        const elblur = (e) => {
+            const cep = e.target.value
+            console.log(isCEPValid(cep))
+        }
+        
+
+        const el = document.getElementById("cep")
+        el.addEventListener("focus", focus)
+        el.addEventListener("blur", blur)
+
+
+
+
         const isCEPValid = cep => regex.test(cep)
 
-        console.log(isCEPValid("12345-678"))
+        
 
     </script>
 </body>
