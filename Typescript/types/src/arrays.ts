@@ -7,3 +7,6 @@ arrayStrings = ["a", "b", "c"]
 
 let arrayStringsGeneric: Array<string>
 arrayStringsGeneric = ["teste", "teste2"]
+
+
+export default 4
