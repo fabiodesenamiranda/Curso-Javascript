@@ -3,7 +3,7 @@ const path = require("path")
 module.exports = {
     mode: "development",
     target: ["web", "es5"],
-    entry: ["core-js/stable", "./src/index.ts"],
+    entry: ["core-js/stable", "./src/js/index.ts"],
     output: {
         path: path.resolve(__dirname, "dist", "js"),
         filename: "index.js"
@@ -22,9 +22,9 @@ module.exports = {
                             ["@babel/plugin-transform-runtime"]
                         ]
                     }
-                },{
+                }, {
                     loader: "ts-loader"
-                }]                
+                }]
             },
             {
                 exclude: /node_modules/,
@@ -40,8 +40,5 @@ module.exports = {
                 }
             }
         ]
-    },
-    resolve: {
-        extensions: [".ts", ".tsx", ".js" ]
     }
 }
