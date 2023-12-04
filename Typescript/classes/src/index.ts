@@ -70,14 +70,22 @@ toto.mostrarDetalhes()
 toto.mostrarCategoria()
 
 class Cliente {
-    readonly listaAnimais: Animal [] = [] // endereço do memória AA
+    private readonly _listaAnimais: Animal [] = [] // endereço do memória AA
+    private _tempListaAnimais: Animal[] = []
 
     adicionarAnimais(...animais: Animal[]): void {
-                this.listaAnimais.push(...animais)
+                this._listaAnimais.push(...animais)
+
+                this._tempListaAnimais.length = 0
+                this._tempListaAnimais = [...this._listaAnimais]
     }
+    get listaAnimais(){
+        return [...this._listaAnimais]
+    }
+
 }
 
 const fabio = new Cliente()
 fabio.adicionarAnimais(toto, mingal)
-console.log(fabio.listaAnimais.length = 0) // AA
+fabio.listaAnimais.length = 0
 console.log(fabio)
