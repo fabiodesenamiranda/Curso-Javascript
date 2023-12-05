@@ -16,3 +16,32 @@ const step3: Action = {
     action: "string"
 }
 
+type NumberOrString = number | string
+interface ActionI<T extends NumberOrString = string, U = number>{
+    action: T,
+    timestamp: U
+}
+
+const step4: ActionI = {
+    action: "delete",
+    timestamp: 123
+}
+
+const historyActions : Array<ActionI> = []
+
+const addAction = <T extends ActionI>(obj: T) => {
+    console.log("addAction")
+    console.log(obj)
+    historyActions.push(obj)
+}
+
+addAction({
+    action: "delete",
+    timestamp: 123,
+    teste: "ola"
+})
+
+console.log(historyActions)
+
+
+export default "teste"
