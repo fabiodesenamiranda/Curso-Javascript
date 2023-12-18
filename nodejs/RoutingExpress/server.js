@@ -29,6 +29,48 @@ app.post("/tasks", (req, res) =>{
 })
 
 
-app.get("/tasks/9", req, res => res.send(tasks.filter(task => task.id === 9)))
+app.route("/tasks/:id")
+.get((req, res) => {
+    res.send(tasks.filter(task => task.id === parseInt(req.params.id)))
+})
+.put((req, res) => {
+    const { title, completed, createdAt, updatedAt, id, userId} =req.body
+    const newTask = {title, completed, createdAt, updatedAt, id, userId}
+
+    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
+    tasks.splice(taskIndex, 1, newTask)
+
+    res.send(newTask)
+})
+
+.patch((req, res) => {
+    const {title, completed, userId} = req.body
+    const taskById = tasks.filter(task => task.id === parseInt(req.params.id))[0]
+    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
+
+    const updatedAt = Date.now()
+
+    const taskUpdated = {title, completed, userId, updatedAt}
+    for (let prop in taskUpdated){
+        if(typeof taskUpdated[prop] === "undefined") delete taskUpdated[prop]
+    }
+
+    const newTask = {...taskById, ...taskUpdated }
+
+    task.splice(taskIndex, 1, newTask)
+
+    res.send(newTask)
+})
+
+.delete((req, res) => {
+    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
+
+    const deleteTask = tasks.splice(taskIndex, 1)
+    
+    res.send(deleteTask)
+})
+
+
+
 
 app.listen(3001)
