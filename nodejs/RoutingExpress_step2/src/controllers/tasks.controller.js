@@ -14,6 +14,10 @@ exports.get = async (req, res) => {
 exports.post = async (req, res) => {
     const { title, userId } = req.body
 
+    if(!title || !userId || isNaN(userId)){
+       return res.status(400).send({message: "erro 400", err: "Requisição Inválida"})
+    }
+
     const newTask = {
         title,
         completed: false,
@@ -34,41 +38,82 @@ exports.post = async (req, res) => {
 }
 
 exports.getById = async (req, res) => {
-    res.send(tasks.find(task => task.id 
-        === parseInt(req.params.id)))
+    // res.send(tasks.find(task => task.id 
+    //     === parseInt(req.params.id)))
+    try{
+        const data = await repository.get(parseInt(req.params.id))
+        if(data){
+            res.status(200).send(data)
+        } else {
+            res.status(404).end()
+        }
+        
+    } catch (e) {
+        res.status(500).send({message: "erro 500", err: e})
+    }    
 }
 
 exports.put = async (req, res) => {
     const { title, completed, createdAt, updatedAt, id, userId } = req.body
-    const newTask = { title, completed, createdAt, updatedAt, id, userId }
 
-    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
-    tasks.splice(taskIndex, 1, newTask)
+    const newTask = { 
+        title, 
+        completed,
+        createdAt,
+        updatedAt,
+        id: parseInt(req.params.id),
+        userId }
 
-    res.send(newTask)
+        const values = Object.values(newTask) 
+
+        
+        if(values.some( v => v === undefined )) {
+            return res.status(400).send({message: "erro 400", err: "Requisição Inválida"})
+        }
+
+try {
+
+    const data = await repository.put(newTask, req.params.id)
+    if(data){
+        res.status(200).send(data)
+    } else {
+        res.status(404).end()
+    }
+    
+
+}catch(e){
+    res.status(500).send({message: "erro 500", err: e})
+}
+
 }
 
 exports.patch = async (req, res) => {
     const { title, completed, userId } = req.body
-    const taskById = tasks.find(task => task.id === parseInt(req.params.id))
-    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
-
-    const updatedAt = Date.now()
-
-    const taskUpdated = { title, completed, userId, updatedAt }
-
-    for (let prop in taskUpdated) {
-        if (typeof taskUpdated[prop] === "undefined") delete taskUpdated[prop]
+    try {
+        const data = await repository.patch({ title, completed, userId}, req.params.id)
+        if(data){
+            res.status(200).send(data)
+        } else {
+            res.status(404).end()
+        }
+       
+    } catch (error) {
+        res.status(500).send({message: "erro 500", err: e})        
     }
 
-    const newTask = { ...taskById, ...taskUpdated }
-    tasks.splice(taskIndex, 1, newTask)
-    res.send(newTask)
+
 }
 
 exports.delete = async (req, res) => {
-    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
-
-    const deletedTask = tasks.splice(taskIndex, 1)
+    try {
+        const data = await repository.delete(req.params.id)
+        if(data){
+            res.status(200).send(data)
+        } else {
+            res.status(404).end()
+        }
+    } catch (error) {
+        res.status(500).send({message: "erro 500", err: e})
+    }
     res.send(deletedTask)
 }
